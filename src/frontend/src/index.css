@@ -1,0 +1,257 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.625rem;
+    /* Anthracite dark theme - primary */
+    --background: 0.118 0.005 240;
+    --foreground: 0.96 0.005 240;
+    --card: 0.105 0.006 240;
+    --card-foreground: 0.96 0.005 240;
+    --popover: 0.13 0.005 240;
+    --popover-foreground: 0.96 0.005 240;
+    --primary: 0.75 0.15 200;
+    --primary-foreground: 0.1 0.005 240;
+    --secondary: 0.14 0.006 240;
+    --secondary-foreground: 0.96 0.005 240;
+    --muted: 0.155 0.005 240;
+    --muted-foreground: 0.6 0.008 240;
+    --accent: 0.75 0.15 200;
+    --accent-foreground: 0.1 0.005 240;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.22 0.008 240;
+    --input: 0.22 0.008 240;
+    --ring: 0.75 0.15 200;
+    /* Cyan accent */
+    --cyan: 0.75 0.15 200;
+    --cyan-glow: 0 0 20px rgba(47, 195, 255, 0.4);
+    --chart-1: 0.646 0.222 41.116;
+    --chart-2: 0.6 0.118 184.704;
+    --chart-3: 0.398 0.07 227.392;
+    --chart-4: 0.828 0.189 84.429;
+    --chart-5: 0.769 0.188 70.08;
+    --sidebar: 0.13 0.005 240;
+    --sidebar-foreground: 0.96 0.005 240;
+    --sidebar-primary: 0.75 0.15 200;
+    --sidebar-primary-foreground: 0.1 0.005 240;
+    --sidebar-accent: 0.155 0.005 240;
+    --sidebar-accent-foreground: 0.96 0.005 240;
+    --sidebar-border: 0.22 0.008 240;
+    --sidebar-ring: 0.75 0.15 200;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Inter", sans-serif;
+    background: linear-gradient(180deg, #0f1113 0%, #171a1d 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0f1113;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2a2f35;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2fc3ff44;
+  }
+}
+
+@layer components {
+  .cta-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 36px;
+    border-radius: 9999px;
+    border: 1px solid #2fc3ff;
+    background: #111417;
+    color: #2fc3ff;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s
+      ease;
+    box-shadow: 0 0 20px rgba(47, 195, 255, 0.25), inset 0 0 20px
+      rgba(47, 195, 255, 0.02);
+    text-decoration: none;
+  }
+  .cta-button:hover {
+    box-shadow: 0 0 40px rgba(47, 195, 255, 0.55), 0 0 80px
+      rgba(47, 195, 255, 0.15), inset 0 0 30px rgba(47, 195, 255, 0.05);
+    border-color: #3ad1ff;
+    background: #13181d;
+  }
+  .cta-button:focus-visible {
+    outline: 2px solid #2fc3ff;
+    outline-offset: 3px;
+  }
+
+  .nav-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: #9aa3ab;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    letter-spacing: 0.02em;
+  }
+  .nav-link:hover {
+    color: #f2f4f6;
+  }
+  .nav-link.active {
+    color: #2fc3ff;
+  }
+
+  /* Legacy project-card kept for backward compat */
+  .project-card {
+    background: #14171a;
+    border: 1px solid #2a2f35;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s
+      ease;
+  }
+  .project-card:hover {
+    border-color: #2fc3ff44;
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 30px
+      rgba(47, 195, 255, 0.08);
+  }
+
+  /* ── Bento Gallery ────────────────────────────────────────────────── */
+
+  /* Responsive grid breakpoints */
+  .bento-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (max-width: 1024px) {
+    .bento-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    /* Override all span variants to uniform 1-column on tablet */
+    .bento-card.col-span-2 {
+      grid-column: span 2;
+    }
+  }
+  @media (max-width: 640px) {
+    .bento-grid {
+      grid-template-columns: 1fr;
+      grid-auto-rows: 240px;
+    }
+    .bento-card {
+      grid-column: span 1 !important;
+      grid-row: span 1 !important;
+    }
+  }
+
+  /* Image zoom on card hover */
+  .bento-card:hover .bento-img {
+    transform: scale(1.1) !important;
+  }
+
+  /* Overlay fade-in on card hover */
+  .bento-card:hover .bento-overlay {
+    opacity: 1 !important;
+  }
+
+  /* Content slide-up + fade-in on card hover */
+  .bento-card:hover .bento-content {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  /* ── End Bento Gallery ────────────────────────────────────────────── */
+
+  .scroll-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: #9aa3ab;
+  }
+  .scroll-indicator-mouse {
+    width: 22px;
+    height: 36px;
+    border: 2px solid #9aa3ab55;
+    border-radius: 11px;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+  }
+  .scroll-indicator-wheel {
+    width: 3px;
+    height: 8px;
+    background: #2fc3ff;
+    border-radius: 2px;
+    animation: scrollWheel 1.8s ease-in-out infinite;
+  }
+
+  @keyframes scrollWheel {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    60% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  .vignette-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 80% 80% at 50% 50%,
+      transparent 30%,
+      rgba(10, 11, 13, 0.6) 70%,
+      rgba(8, 9, 11, 0.9) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-title {
+    font-family: "Inter", sans-serif;
+    font-size: clamp(60px, 9vw, 92px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #f2f4f6;
+    text-transform: lowercase;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
