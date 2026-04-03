@@ -1,13 +1,28 @@
+import { useState } from "react";
 import { AboutSection } from "./components/AboutSection";
 import { ContactSection } from "./components/ContactSection";
 import { Footer } from "./components/Footer";
 import { HeroSection } from "./components/HeroSection";
 import { Navbar } from "./components/Navbar";
 import { ParticleBackground } from "./components/ParticleBackground";
+import { ProductDetailPage } from "./components/ProductDetailPage";
 import { ProjectsSection } from "./components/ProjectsSection";
 import { ServicesSection } from "./components/ServicesSection";
 
 export default function App() {
+  const [selectedProjectId, setSelectedProjectId] = useState<number | null>(
+    null,
+  );
+
+  if (selectedProjectId !== null) {
+    return (
+      <ProductDetailPage
+        projectId={selectedProjectId}
+        onClose={() => setSelectedProjectId(null)}
+      />
+    );
+  }
+
   return (
     <div
       style={{
@@ -26,7 +41,7 @@ export default function App() {
       {/* Page content */}
       <main>
         <HeroSection />
-        <ProjectsSection />
+        <ProjectsSection onSelectProject={(id) => setSelectedProjectId(id)} />
         <ServicesSection />
         <AboutSection />
         <ContactSection />

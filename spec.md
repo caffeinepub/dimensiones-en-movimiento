@@ -1,31 +1,41 @@
-# nexgenxfigures Portfolio
+# nexgenxfigures — Product Detail Page
 
 ## Current State
-The portfolio already has a full-page layout with:
-- Dark anthracite background with particle animation
-- HeroSection, ProjectsSection, ServicesSection, AboutSection, ContactSection, Navbar, Footer
-- Existing ProjectsSection with project-card components
-- Sample project images already generated in public/assets/generated/
+The portfolio has a landing page with HeroSection, bento-box gallery (ProjectsSection), ServicesSection, AboutSection, ContactSection, Footer and ParticleBackground. All components use inline styles consistent with the dark anthracite theme (#0f1113 background, #2fc3ff cyan accent, Inter font).
+
+No product detail page exists yet.
 
 ## Requested Changes (Diff)
 
 ### Add
-- BentoGallery section (or replace/enhance ProjectsSection) with a bento-box grid layout
-- Each bento card: rounded corners (xl/2xl), diffuse box shadow
-- Hover interaction on each card: smooth image zoom (transform scale on the inner img), overlay appears with project name and software used (Blender, ZBrush, etc.)
-- Use the 4 existing generated images as content
-- Bento layout: mixed sizes (some cards span 2 columns or 2 rows) to create visual variety
+- `ProductDetailPage` component: full-page product view accessible via a new `/product/:id` route or as an overlay/modal from the bento gallery cards
+- High-resolution image carousel with:
+  - Large main image viewer
+  - Thumbnail strip below for navigation
+  - Prev/Next arrow controls
+  - Smooth slide/fade transitions
+  - Keyboard navigation support
+- Sidebar panel (right column on desktop, below on mobile) containing:
+  - Product title and subtitle
+  - Technical description (materials, dimensions, software, polygon count, etc.)
+  - Style tags / badges (e.g. "Sci-Fi", "Hard Surface", "Character")
+  - Social media buttons: Instagram, ArtStation, Behance — white icon on dark grey background
+- A "back to gallery" button to return to the main page
+- Route wiring in App.tsx so clicking a bento card opens the detail view
 
 ### Modify
-- ProjectsSection: Replace or redesign to use the new bento-box gallery layout
+- `App.tsx`: add state for selected product and conditionally render ProductDetailPage vs the normal layout
+- `ProjectsSection.tsx`: make bento cards clickable, pass project id/data to the detail page
+- `index.css`: add carousel and product-detail specific utility classes if needed
 
 ### Remove
-- Nothing to remove from app shell
+- Nothing removed
 
 ## Implementation Plan
-1. Create/replace ProjectsSection with a BentoGallery component using CSS grid with mixed column/row spans
-2. Each card wraps an `<img>` with overflow:hidden and rounded corners
-3. The image has `transition: transform 0.4s ease` and scales to 1.08 on group-hover
-4. An overlay div (absolute, inset-0) fades in on hover showing project name + software badges
-5. Use the 4 existing project images from /assets/generated/
-6. Add 2-3 more sample projects using the same images for variety to fill the bento grid
+1. Create `src/frontend/src/components/ProductDetailPage.tsx` with carousel + sidebar layout
+2. Use existing project data (extended with more fields: description, tags, dimensions, polygon count) as mock data
+3. Implement carousel state (currentIndex) with prev/next handlers and thumbnail click
+4. Build social buttons section with inline SVG icons for Instagram, ArtStation, Behance
+5. Update App.tsx to hold `selectedProject` state, pass setter to ProjectsSection
+6. Update ProjectsSection bento cards to call `onSelectProject` on click
+7. Add responsive CSS (desktop: 2-column grid; mobile: stacked)

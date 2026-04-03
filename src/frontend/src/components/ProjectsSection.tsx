@@ -8,6 +8,10 @@ interface Project {
   span: "large" | "medium" | "small";
 }
 
+interface ProjectsSectionProps {
+  onSelectProject: (id: number) => void;
+}
+
 const PROJECTS: Project[] = [
   {
     id: 1,
@@ -75,7 +79,7 @@ function getMinHeight(span: Project["span"]): string {
   }
 }
 
-export function ProjectsSection() {
+export function ProjectsSection({ onSelectProject }: ProjectsSectionProps) {
   return (
     <section
       id="proyectos"
@@ -172,6 +176,7 @@ export function ProjectsSection() {
               boxShadow:
                 "0 16px 56px rgba(0,0,0,0.65), 0 0 24px rgba(47,195,255,0.12)",
             }}
+            onClick={() => onSelectProject(project.id)}
             onMouseEnter={(e) => {
               e.currentTarget.style.borderColor = "rgba(47,195,255,0.2)";
             }}
